@@ -1,15 +1,23 @@
-# Ms. Pac-Man DQN — Class 3 Assignment 2
+# Ms. Pac-Man Deep Q-Network Agent
 
-Training a Deep Q-Network on `ALE/MsPacman-v5` using the class's ready-made notebook, with three
-hyperparameters chosen and justified below. This repository contains the executed notebook and the
-evidence from its final training/evaluation run.
+Training a Deep Q-Network (DQN) in PyTorch to play Atari Ms. Pac-Man (`ALE/MsPacman-v5`). I picked and justified three hyperparameters, ran a full 200-episode training run on CPU, and evaluated the trained agent against an untrained baseline on five fixed seeds.
 
-## Overview and how to run it
+**Result:** the trained agent's mean score went from **492 to 728 (+48%)** across 5 evaluation games. The gain was uneven: one game scored 1,910, and two of the five seeds came in below the baseline. I discuss the reason (training instability) and the experiment I'd run next [below](#limitation-and-next-experiment).
+
+| Untrained agent | Trained agent (best evaluation game) |
+|:---:|:---:|
+| ![Untrained gameplay](results/demos/episode_0000.gif) | ![Best trained gameplay](results/demos/final_best.gif) |
+
+**Stack:** Python · PyTorch · Gymnasium + ALE (Atari) · NumPy · Matplotlib · Jupyter
+
+> *Project context:* built as a reinforcement-learning course project. The DQN implementation is the course's starter notebook. My work was the experiment: choosing and justifying the hyperparameters, running the full training, evaluating the results and analyzing what happened.
+
+## How to run it
 
 The notebook (`pacman_dqn.ipynb`) is the class's starter notebook, unmodified except for the three
 values in section 1.
 
-- **Google Colab:** [Open pacman_dqn.ipynb in Colab](https://colab.research.google.com/github/pepealonso95/pacman-dqn/blob/main/pacman_dqn.ipynb), select a GPU under Runtime → Change runtime type, and choose Runtime → Run all.
+- **Google Colab:** [Open pacman_dqn.ipynb in Colab](https://colab.research.google.com/github/vivekkhedkar-oss/mspacman-dqn-agent/blob/main/pacman_dqn.ipynb), select a GPU under Runtime → Change runtime type, and choose Runtime → Run all.
 - **Local Jupyter / VS Code:** clone this repo, open `pacman_dqn.ipynb`, select a Python 3.11–3.13 kernel, and Run All. The notebook installs its own pinned packages (PyTorch, Gymnasium, ALE-Py, OpenCV, NumPy, Matplotlib, Pillow) and auto-detects CUDA / MPS / CPU.
 
 This run was executed locally on **CPU** (Windows, no CUDA-capable GPU available) with a Python 3.12.14
@@ -85,9 +93,6 @@ carrying the average — this is not a uniform, reliable improvement across seed
 - **Best trained gameplay** (selected from the five evaluation games, first 20 seconds shown): [`results/demos/final_best.gif`](results/demos/final_best.gif)
 - **Intermediate checkpoints** (every 25 episodes, since this run reached 200 episodes ≥ 25): [`episode_0025`](results/demos/episode_0025.gif) · [`episode_0050`](results/demos/episode_0050.gif) · [`episode_0075`](results/demos/episode_0075.gif) · [`episode_0100`](results/demos/episode_0100.gif) · [`episode_0125`](results/demos/episode_0125.gif) · [`episode_0150`](results/demos/episode_0150.gif) · [`episode_0175`](results/demos/episode_0175.gif) · [`episode_0200`](results/demos/episode_0200.gif)
 
-![Untrained gameplay](results/demos/episode_0000.gif)
-![Best trained gameplay](results/demos/final_best.gif)
-
 ## Training dashboard
 
 ![Training dashboard: raw score, mean update loss, and exploration over 200 episodes](results/training_dashboard.png)
@@ -130,9 +135,4 @@ evaluation seeds, rather than a mean pulled up by a single standout game.
 
 **Model checkpoints** (`untrained.pt`, `trained.pt`, and one per 25-episode interval, 6.5 MB each) are
 not committed to this repository to keep it small. They are included in the full run ZIP attached to
-this repository's [GitHub Release](../../releases), alongside every other file in `results/`.
-
-## Scope note
-
-This uses the class's supplied DQN unmodified; only the three hyperparameters in section 1 were edited.
-No website, backend, or deployment is part of this assignment.
+this repository's [GitHub Release](https://github.com/vivekkhedkar-oss/mspacman-dqn-agent/releases), alongside every other file in `results/`.
